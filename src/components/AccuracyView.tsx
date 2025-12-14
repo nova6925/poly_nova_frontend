@@ -14,11 +14,12 @@ interface ModelAccuracy {
 export const AccuracyView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
     const [data, setData] = useState<ModelAccuracy[]>([]);
     const [loading, setLoading] = useState(true);
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
     useEffect(() => {
         const fetchAccuracy = async () => {
             try {
-                const res = await axios.get('http://localhost:3000/weather/accuracy');
+                const res = await axios.get(`${API_URL}/weather/accuracy`);
                 console.log('Accuracy data:', res.data);
                 setData(res.data);
             } catch (err) {

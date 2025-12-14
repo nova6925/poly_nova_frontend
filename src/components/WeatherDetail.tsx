@@ -20,17 +20,19 @@ export const WeatherDetail: React.FC<{ onBack: () => void }> = ({ onBack }) => {
     const [startDate, setStartDate] = useState('');
     const [fetching, setFetching] = useState(false);
 
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
     const fetchData = async () => {
         try {
             console.log('Fetching weather data...');
-            const res = await axios.get('http://localhost:3000/weather/forecasts');
+            const res = await axios.get(`${API_URL}/weather/forecasts`);
             const grouped: GroupedForecasts = res.data;
 
             console.log('Raw API Response:', grouped);
             console.log('Sources:', Object.keys(grouped));
 
             // Fetch resolutions (actual temperatures)
-            const resolutionsRes = await axios.get('http://localhost:3000/weather/resolutions');
+            const resolutionsRes = await axios.get(`${API_URL}/weather/resolutions`);
             const resolutions = resolutionsRes.data;
             console.log('Resolutions:', resolutions);
 
@@ -81,7 +83,7 @@ export const WeatherDetail: React.FC<{ onBack: () => void }> = ({ onBack }) => {
         setFetching(true);
         try {
             console.log('Triggering collection for:', startDate);
-            await axios.post('http://localhost:3000/weather/collect', { startDate });
+            await axios.post(`${API_URL}/weather/collect`, { startDate });
             setTimeout(() => {
                 fetchData();
                 setFetching(false);

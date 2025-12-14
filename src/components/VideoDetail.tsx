@@ -9,9 +9,11 @@ export const VideoDetail: React.FC<{ onBack: () => void }> = ({ onBack }) => {
     const [history, setHistory] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
 
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
     useEffect(() => {
         // Fetch list of videos
-        axios.get('http://localhost:3000/videos')
+        axios.get(`${API_URL}/videos`)
             .then(res => {
                 setVideos(res.data);
                 if (res.data.length > 0) {
@@ -29,7 +31,7 @@ export const VideoDetail: React.FC<{ onBack: () => void }> = ({ onBack }) => {
     useEffect(() => {
         if (selectedVideo) {
             setLoading(true);
-            axios.get(`http://localhost:3000/videos/${selectedVideo}/history`)
+            axios.get(`${API_URL}/videos/${selectedVideo}/history`)
                 .then(res => {
                     // Transform history for chart
                     const chartData = res.data.snapshots.map((h: any) => ({
