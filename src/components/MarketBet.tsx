@@ -14,7 +14,6 @@ interface EventData {
 }
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
-const BOT_URL = import.meta.env.VITE_BOT_URL || 'http://localhost:4000';
 
 export default function MarketBet() {
     const [slug, setSlug] = useState('');
@@ -57,7 +56,7 @@ export default function MarketBet() {
         setBetResult('Placing bet...');
 
         try {
-            const res = await fetch(`${BOT_URL}/bet`, {
+            const res = await fetch(`${API_URL}/bot/bet`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
