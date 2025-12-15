@@ -1,12 +1,13 @@
 import { useState } from 'react';
-import { CloudRain, Youtube, Trophy } from 'lucide-react';
+import { CloudRain, Youtube, Trophy, Wallet } from 'lucide-react';
 import { MarketCard } from './components/MarketCard';
 import { WeatherDetail } from './components/WeatherDetail';
 import { VideoDetail } from './components/VideoDetail';
 import { AccuracyView } from './components/AccuracyView';
+import MarketBet from './components/MarketBet';
 import './index.css';
 
-type View = 'dashboard' | 'weather' | 'video' | 'accuracy';
+type View = 'dashboard' | 'weather' | 'video' | 'accuracy' | 'betting';
 
 function App() {
   const [view, setView] = useState<View>('dashboard');
@@ -19,6 +20,8 @@ function App() {
         return <VideoDetail onBack={() => setView('dashboard')} />;
       case 'accuracy':
         return <AccuracyView onBack={() => setView('dashboard')} />;
+      case 'betting':
+        return <MarketBet />;
       default:
         return (
           <div className="dashboard-grid">
@@ -45,6 +48,14 @@ function App() {
               trend="NWS vs ECMWF"
               color="#f59e0b"
               onClick={() => setView('accuracy')}
+            />
+            <MarketCard
+              title="Market Betting"
+              icon={<Wallet size={24} />}
+              value="Place Bets"
+              trend="Polymarket"
+              color="#8b5cf6"
+              onClick={() => setView('betting')}
             />
           </div>
         );
