@@ -63,7 +63,7 @@ export default function MarketBet() {
                     tokenId: market.tokenId,
                     amount: betAmount,
                     side,
-                    marketTitle: market.title
+                    market: market.title
                 })
             });
             const data = await res.json();
