@@ -4,6 +4,8 @@ interface Market {
     id: string;
     title: string;
     tokenId: string | null;
+    yesTokenId: string | null;
+    noTokenId: string | null;
     active: boolean;
 }
 
@@ -48,8 +50,10 @@ export default function MarketBet() {
     };
 
     const placeBet = async (market: Market, side: 'YES' | 'NO') => {
-        if (!market.tokenId) {
-            setBetResult('❌ No token ID for this market');
+        const tokenId = side === 'YES' ? market.yesTokenId : market.noTokenId;
+
+        if (!tokenId) {
+            setBetResult(`❌ No ${side} token ID for this market`);
             return;
         }
 
@@ -60,7 +64,7 @@ export default function MarketBet() {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    tokenId: market.tokenId,
+                    tokenId: tokenId,
                     amount: betAmount,
                     side,
                     market: market.title
